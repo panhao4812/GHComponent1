@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Drawing;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 
@@ -36,12 +36,16 @@ namespace GHComponent1
         {
             get
             {
-                return Properties.Resources.Reimu ;
+                Bitmap bitmap2 = new Bitmap(24, 24);
+                Graphics g = Graphics.FromImage(bitmap2);
+                g.DrawImage(GHComponent1.Properties.Resources.pic1,
+                    new RectangleF(0, 0, 24, 24));
+                return bitmap2;
             }
         }
         public override Guid ComponentGuid
         {
-            get { return new Guid("{0078207c-bc94-4684-802e-b57142698a22}"); }
+            get { return new Guid("{F6CB254E-70ED-4347-B6A0-9D081C463753}"); }
         }
     }
 }

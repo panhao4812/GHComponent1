@@ -85,6 +85,7 @@ namespace GHComponent1
               
                     graphics.DrawImage(bitmap, new RectangleF(new PointF(this.Bounds.Location.X, this.Bounds.Location.Y), new SizeF(bitmap.Size.Width, bitmap.Size.Height)));
                     graphics.DrawRectangle(pen2, Rectangle.Round(this.Bounds));
+                    bitmap.Dispose();
                 }
                 else
                 {                
