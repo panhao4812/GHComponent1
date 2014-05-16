@@ -1,21 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using Grasshopper.Kernel.Types;
+﻿using GH_IO.Serialization;
+using Grasshopper.Getters;
+using Grasshopper.GUI.HTML;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
+using Rhino;
+using Rhino.DocObjects;
 using Rhino.Geometry;
+using Rhino.Input.Custom;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
+
 namespace GHComponent1
 {
-  public  class Param_Mesh2 : GH_PersistentGeometryParam<GH_Mesh>
+  public  class Param_Line2 : GH_PersistentGeometryParam<GH_Curve>
     {
-        public Param_Mesh2()
-            : base(new GH_InstanceDescription("Mesh2", "Mesh2", "Contains a collection of polygon meshes", "Params", "Util"))
+      public Param_Line2()
+            : base(new GH_InstanceDescription("Line2", "Line2", "Test", "Params", "Util"))
 {
-    this.m_hidden = false;
+                        
 }
-
- 
-    private bool m_hidden;
     public override GH_Exposure Exposure
     {
         get
@@ -23,29 +29,45 @@ namespace GHComponent1
             return GH_Exposure.secondary;
         }
     }
+    protected override GH_Curve InstantiateT()
+    {
+        return new GH_Curve();
+    }
 
-        protected override GH_GetterResult Prompt_Plural(ref List<GH_Mesh> values)
+    protected override GH_GetterResult Prompt_Singular(ref GH_Curve value)
+  
         {
-            values = Grasshopper.Getters.GH_MeshGetter.GetMeshes();
-            if ((values != null) && (values.Count != 0))
+            Rhino.Input.Custom.GetObject obj2= new GetObject();
+                obj2.SetCommandPrompt("LinearDimension  reference");
+                obj2.GeometryFilter = ObjectType.Curve;
+            Rhino.Input.GetResult result = obj2.Get();
+           
+            if (result !=  Rhino.Input. GetResult.Object)
+            {
+                return GH_GetterResult.accept;
+            }
+
+            GH_Curve dm = new GH_Curve(obj2.Object(0).ObjectId);
+            if (dm != null)
+            {
+                value = dm;
+                return GH_GetterResult.success;
+            }
+            else
+            {
+                return GH_GetterResult.cancel;
+            }
+        }
+    protected override GH_GetterResult Prompt_Plural(ref List<GH_Curve> values)
+        {
+            values = GH_CurveGetter.GetCurves();
+            if (values != null)
             {
                 return GH_GetterResult.success;
             }
             return GH_GetterResult.cancel;
+
         }
-
-
-        protected override GH_GetterResult Prompt_Singular(ref GH_Mesh value)
-        {
-            value = Grasshopper.Getters.GH_MeshGetter.GetMesh();
-            if (value == null)
-            {
-                return GH_GetterResult.cancel;
-            }
-            return GH_GetterResult.success;
-        }
-
-
 
         public override Guid ComponentGuid
         {

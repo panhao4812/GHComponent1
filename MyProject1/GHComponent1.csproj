@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GH_DimensionGetter.cs" />
     <Compile Include="MeshTest.cs" />
     <Compile Include="ImageSample.cs" />
     <Compile Include="ImageSampleAttributes.cs" />
