@@ -116,8 +116,7 @@ namespace GHComponent1
                 {
                     GH_LinearDimension dm = new GH_LinearDimension(obj2.Object(i).ObjectId);
                     if ((dm != null) && (!dm.IsGeometryLoaded)) { dm.LoadGeometry(); }
-                    list2.Add( dm);
-                      
+                    list2.Add( dm);                 
                 }
                 else
                 {

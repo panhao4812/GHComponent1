@@ -4,10 +4,13 @@ using Grasshopper.Kernel.Types;
 using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
+using Rhino;
+
 namespace GHComponent1
 {
-public class Param_Dimention :  GH_PersistentGeometryParam<GH_LinearDimension>
+    public class Param_Dimention : GH_PersistentGeometryParam<GH_LinearDimension>, IGH_BakeAwareObject, IGH_PreviewObject
     {
+        private bool m_hidden;
         protected override Grasshopper.Kernel.GH_GetterResult Prompt_Singular(ref GH_LinearDimension value)
   {
       value = GH_DimensionGetter.GetLinearDimension2();
@@ -50,5 +53,53 @@ public class Param_Dimention :  GH_PersistentGeometryParam<GH_LinearDimension>
             }
         }
 //////////////
-}
+        public BoundingBox ClippingBox
+        {
+            get
+            {
+                return this.Preview_ComputeClippingBox();
+            }
+        }
+        public void DrawViewportMeshes(IGH_PreviewArgs args)
+        {
+           
+        }
+        public void DrawViewportWires(IGH_PreviewArgs args)
+        {
+          
+        }
+        public bool Hidden
+        {
+            get
+            {
+                return this.m_hidden;
+            }
+            set
+            {
+                this.m_hidden = value;
+            }
+        }
+        public bool IsPreviewCapable
+        {
+            get
+            {
+                return true;
+            }
+        }
+        public bool IsBakeCapable
+        {
+            get
+            {
+                return !base.m_data.IsEmpty;
+            }
+        }
+        public void BakeGeometry(RhinoDoc doc, List<Guid> obj_ids)
+        {
+            this.BakeGeometry(doc, null, obj_ids);
+        }
+        public void BakeGeometry(RhinoDoc doc, Rhino.DocObjects.ObjectAttributes att, List<Guid> obj_ids)
+        {
+          
+        }
+    }
 }
