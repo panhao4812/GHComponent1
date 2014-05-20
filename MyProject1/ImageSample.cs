@@ -8,20 +8,16 @@ namespace GHComponent1
 {
     public class ImageSample : GH_Component
     {
-
         public ImageSample() : base("ImageSample", "Embryo","ImageSample","Params", "Util") {}
         public override GH_Exposure Exposure
         {
             get { return GH_Exposure.secondary; }
                 // 电池在shell的位置 
         }
-
         public override void CreateAttributes()
         {
             base.m_attributes = new ImageSampleAttributes(this);
-        }
-
-      
+        }     
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Path", "P", "File Path", GH_ParamAccess.item);

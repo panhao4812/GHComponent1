@@ -5,6 +5,7 @@ using Grasshopper.Kernel;
 using Rhino.Geometry;
 using System.Drawing;
 using Rhino;
+using System.Collections;
 
 namespace GHComponent1
 {
@@ -36,7 +37,7 @@ namespace GHComponent1
                 return GH_Exposure.secondary;
             }
         }
-        public Param_Dimention() : base(new GH_InstanceDescription("Data2D", "D2", "Data2D", "Params", "Util")) { }
+        public Param_Dimention() : base(new GH_InstanceDescription("LinearDimension", "LD", "LinearDimension", "Params", "Util")) { }
         public override Guid ComponentGuid
         {
             get { return new Guid("{835F558F-3CCC-4882-A05C-791439E2445E}"); }
@@ -66,7 +67,7 @@ namespace GHComponent1
         }
         public void DrawViewportWires(IGH_PreviewArgs args)
         {
-          
+            this.Preview_DrawWires(args);
         }
         public bool Hidden
         {
@@ -100,6 +101,27 @@ namespace GHComponent1
         public void BakeGeometry(RhinoDoc doc, Rhino.DocObjects.ObjectAttributes att, List<Guid> obj_ids)
         {
           
+            if (att == null)
+            {
+                att = doc.CreateDefaultAttributes();
+            }
+            try
+            {
+                foreach (IGH_BakeAwareData data in base.m_data)
+                {
+                    Guid guid;
+                    if ((data != null) && data.BakeGeometry(doc, att, out guid))
+                    {
+                        obj_ids.Add(guid);
+                    }
+                }
+            }
+            finally { }
+        
+        }
+        public override void CreateAttributes()
+        {
+            base.m_attributes = new Param_DimentionAttributes(this);
         }
     }
 }

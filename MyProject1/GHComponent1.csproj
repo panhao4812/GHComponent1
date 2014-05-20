@@ -55,12 +55,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GH_Mesh2.cs" />
-    <Compile Include="GH_DimensionGetter.cs" />
-    <Compile Include="MeshTest.cs" />
+    <Compile Include="GH_Convert2.cs" />
+    <Compile Include="GH_Getter2.cs" />
+    <Compile Include="GH_TypeLib2.cs" />
     <Compile Include="ImageSample.cs" />
     <Compile Include="ImageSampleAttributes.cs" />
     <Compile Include="Param_Dimention.cs" />
+    <Compile Include="Param_DimentionAttributes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -105,5 +106,6 @@ Erase "$(TargetPath)"</PostBuildEvent>
     <StartArguments>
     </StartArguments>
     <StartAction>Program</StartAction>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
 </Project>

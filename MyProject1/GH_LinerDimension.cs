@@ -13,22 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 namespace GHComponent1
 {
-    public sealed  class GH_TypeLib2
-    {
-        public static Guid id_gh_lineardimension;
-         public static Guid id_rc_lineardimension;
-         public static Type t_gh_lineardimension;
-         public static Type t_rc_lineardimension;
-          public GH_TypeLib2()
-        {
-           
-            t_gh_lineardimension = typeof(GH_LinearDimension);
-            t_rc_lineardimension=typeof(LinearDimension);
-            id_rc_lineardimension = t_rc_lineardimension.GUID;
-            id_gh_lineardimension = t_gh_lineardimension.GUID;
-        }
-    }
-
+   
     public class GH_LinearDimension : GH_GeometricGoo<LinearDimension>, IGH_BakeAwareData, IGH_PreviewData
     {
         private System.Guid m_ref_guid;
@@ -58,7 +43,6 @@ namespace GHComponent1
         {
             return new GH_LinearDimension(this);
         }
-
         public override string ToString()
         {
             return this.Value.ToString();
@@ -156,7 +140,6 @@ this.Value.TextPosition.X,this.Value.TextPosition.Y,};
         {
             return new GH_LinearDimensionProxy(this);
         }
-
         public override bool CastTo<T>(out T target)
         {
             if ((base.m_value != null) && typeof(T).IsAssignableFrom(GH_TypeLib2.t_rc_lineardimension))
@@ -171,135 +154,10 @@ this.Value.TextPosition.X,this.Value.TextPosition.Y,};
         public override bool CastFrom(object source)
         {
             GH_LinearDimension target = this;
-         
-          return ToGHLinearDimension(RuntimeHelpers.GetObjectValue(source), ref target);
+
+            return Convert2.ToGHLinearDimension(RuntimeHelpers.GetObjectValue(source), ref target);
                  
-        }
-        public bool ToGHLinearDimension(object data, ref GH_LinearDimension target)
-        {
-            if (!ToGHLinearDimension_Primary(RuntimeHelpers.GetObjectValue(data), ref target))
-                    {
-                        return ToGHLinearDimension_Secondary(RuntimeHelpers.GetObjectValue(data), ref target);
-                    }
-                    return true;
-        }
-        public static bool ToGHLinearDimension_Primary(object data, ref GH_LinearDimension target)
-        {
-            if (data == null)
-            {
-                return false;
-            }
-            Guid gUID = data.GetType().GUID;
-            if (gUID == GH_TypeLib2.id_rc_lineardimension)
-            {
-                if (target == null)
-                {
-                    target = new GH_LinearDimension((LinearDimension)data);
-                }
-                else
-                {
-                    target.Value = (LinearDimension)data;
-                }
-                return true;
-            }
-            if (!(gUID == GH_TypeLib2.id_gh_lineardimension))
-            {
-                return false;
-            }
-            if (target == null)
-            {
-                target = (GH_LinearDimension)data;
-            }
-            else
-            {
-                target.Value = ((GH_LinearDimension)data).Value;
-                target.ReferenceID = ((GH_LinearDimension)data).ReferenceID;
-            }
-            return true;
-        }
-        public static bool ToGHLinearDimension_Secondary(object data, ref GH_LinearDimension target)
-        {
-            Guid guid = Guid.Empty;
-            if (data == null)
-            {
-                return false;
-            }
-            if (GH_Convert.ToGUID_Primary(RuntimeHelpers.GetObjectValue(data), ref guid))
-            {
-                if (target == null)
-                {
-                    target = new GH_LinearDimension(guid);
-                }
-                else
-                {
-                    target.ReferenceID = guid;
-                }
-                target.ClearCaches();
-                target.LoadGeometry();
-                return target.IsValid;
-            }
-            string destination = null;
-            if (GH_Convert.ToString_Primary(RuntimeHelpers.GetObjectValue(data), ref destination))
-            {
-                RhinoObject obj2 = GH_Convert.FindRhinoObjectByNameAndType(destination, ObjectType.Annotation);
-                if (obj2 != null)
-                {
-                    if (target == null)
-                    {
-                        target = new GH_LinearDimension();
-                    }
-                    target.ReferenceID = (Guid)obj2.Id;
-                    target.ClearCaches();
-                    target.LoadGeometry();
-                    return target.IsValid;
-                }
-            }
-            LinearDimension rc = null;
-            if (!ToLinearDimension_Secondary(RuntimeHelpers.GetObjectValue(data), ref rc))
-            {
-                return false;
-            }
-            if (target == null)
-            {
-                target = new GH_LinearDimension(rc);
-            }
-            else
-            {
-                target.Value = rc;
-                target.ReferenceID = Guid.Empty;
-            }
-            return true;
-        }
-        public static bool ToLinearDimension_Secondary(object data, ref LinearDimension rc)
-        {
-            if (data != null)
-            {             
-                Guid gUID = data.GetType().GUID;
-                Guid guid3 = gUID;         
-                if ((guid3 == GH_TypeLib.id_guid) || (guid3 == GH_TypeLib.id_gh_guid))
-                {
-                    Guid guid2;
-                    if (gUID == GH_TypeLib.id_guid)
-                    {
-                        guid2 = (Guid)data;
-                    }
-                    else
-                    {
-                        guid2 = ((GH_Guid)data).Value;
-                    }
-                    Rhino.DocObjects.ObjRef refer=new ObjRef((Guid)guid2);
-                    LinearDimension dimension = (LinearDimension)refer.Geometry();
-                    if (dimension != null)
-                    {
-                        rc = (LinearDimension)dimension.Duplicate();
-                        return true;
-                    }
-                }
-                return false;
-            }
-            return false;
-        }
-       
+        }     
         //*************************************
         public override bool IsValid
         {
@@ -310,6 +168,7 @@ this.Value.TextPosition.X,this.Value.TextPosition.Y,};
                     return false;
                 }
                 return base.m_value.IsValid;
+               
             }
         }
         public override string IsValidWhyNot
@@ -392,7 +251,7 @@ this.Value.TextPosition.X,this.Value.TextPosition.Y,};
     }
     public void DrawViewportWires(GH_PreviewWireArgs args)
     {
-    
+     
     }
     public bool BakeGeometry(RhinoDoc doc, Rhino.DocObjects.ObjectAttributes att, out System.Guid obj_guid)
     {
@@ -404,9 +263,6 @@ this.Value.TextPosition.X,this.Value.TextPosition.Y,};
         obj_guid = (System.Guid)doc.Objects.AddLinearDimension(this.Value, att);
         return true;
     }
-
-
-
 ///////////////
     }
 }
