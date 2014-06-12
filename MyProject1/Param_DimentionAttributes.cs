@@ -32,9 +32,7 @@ namespace GHComponent1
                 //修改显示电池主体的代码
                 SolidBrush brush=new SolidBrush(Color.White);
                 SolidBrush brush2 = new SolidBrush(Color.White);
-                Pen pen = new Pen(Color.Black); 
-                pen.Width = 2;
-
+                Pen pen = new Pen(Color.Black);            
                 switch (Owner.RuntimeMessageLevel)
                 {
                     case GH_RuntimeMessageLevel.Warning:
@@ -49,12 +47,12 @@ namespace GHComponent1
                 }
                 if (this.Owner.Locked) pen.Color = Color.Gray;
                 else pen.Color = Color.Black;
-
+                pen.Width = 2;
                     graphics.FillEllipse(brush, this.Bounds.X - 4f, this.Bounds.Y+this.Bounds.Height/2 - 4f, 8f, 8f);
                     graphics.DrawEllipse(pen, this.Bounds.X - 4f, this.Bounds.Y+this.Bounds.Height/2 - 4f, 8f, 8f);      
                     graphics.FillEllipse(brush, this.Bounds.X+this.Bounds.Width- 4f, this.Bounds.Y+this.Bounds.Height/2 - 4f, 8f, 8f);
-                    graphics.DrawEllipse(pen, this.Bounds.X+this.Bounds.Width- 4f, this.Bounds.Y+this.Bounds.Height/2 - 4f, 8f, 8f);        
-                      
+                    graphics.DrawEllipse(pen, this.Bounds.X+this.Bounds.Width- 4f, this.Bounds.Y+this.Bounds.Height/2 - 4f, 8f, 8f);
+                    pen.Width = 1;   
                     graphics.FillRectangle(brush2, Rectangle.Round(this.Bounds));
                     graphics.DrawRectangle(pen, Rectangle.Round(this.Bounds));
                 }
