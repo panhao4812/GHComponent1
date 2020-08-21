@@ -48,7 +48,7 @@ namespace GHComponent1
             {
                 Bitmap bitmap2 = new Bitmap(24, 24);
                 Graphics g = Graphics.FromImage(bitmap2);
-                g.DrawImage(GHComponent1.Properties.Resources.pic2,
+                g.DrawImage(GHParamComponentDemo.Properties.Resources.pic2,
                     new RectangleF(0, 0, 24, 24));
                 return bitmap2;
             }
